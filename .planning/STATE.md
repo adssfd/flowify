@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** AI generates accurate, relevant diagrams by understanding the actual code structure
-**Current focus:** Phase 7 — GitHub API
+**Current focus:** Phase 8 — AI Context Injection
 
 ## Current Position
 
-Phase: 7 of 12 (GitHub API)
+Phase: 8 of 12 (AI Context Injection)
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-01-11 — Phase 6 completed
+Last activity: 2026-01-11 — Phase 7 completed
 
-Progress: ██████░░░░ 50%
+Progress: ███████░░░ 58%
 
 ## Performance Metrics
 

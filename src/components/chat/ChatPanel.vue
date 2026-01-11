@@ -15,6 +15,8 @@ import {
   type FileWithPath,
 } from '@/utils/fileReader'
 import { parseGitHubUrl } from '@/utils/github'
+import { fetchGitHubRepo } from '@/services/github'
+import { ContextLoadingState } from '@/types'
 import type { AIRequest } from '@/types'
 import { AIError, ContextSource } from '@/types'
 
@@ -466,11 +468,21 @@ async function handleDataDropped(dataTransfer: DataTransfer) {
   }
 }
 
-function handleGitHubUrl(url: string) {
+async function handleGitHubUrl(url: string) {
   const repo = parseGitHubUrl(url)
-  if (repo) {
-    contextStore.setGitHubRepo(repo)
-    // Fetching will be implemented in Phase 7
+  if (!repo) return
+
+  contextStore.setGitHubRepo(repo)
+  contextStore.setLoading(ContextLoadingState.LOADING)
+  contextStore.setError(null)
+
+  try {
+    const files = await fetchGitHubRepo(repo)
+    contextStore.addFiles(files)
+    contextStore.setLoading(ContextLoadingState.IDLE)
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Failed to fetch repository'
+    contextStore.setError(message)
   }
 }
 </script>
@@ -489,7 +501,9 @@ function handleGitHubUrl(url: string) {
       </button>
     </div>
 
-    <ContextIndicator v-if="contextStore.hasContext" />
+    <ContextIndicator
+      v-if="contextStore.hasContext || contextStore.loadingState !== ContextLoadingState.IDLE"
+    />
 
     <div ref="messagesContainer" class="messages-container">
       <ChatMessage

@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useContextStore } from '@/stores/context'
+import { ContextLoadingState } from '@/types'
 
 const contextStore = useContextStore()
+
+const isLoading = computed(() => contextStore.loadingState === ContextLoadingState.LOADING)
+const hasError = computed(() => contextStore.loadingState === ContextLoadingState.ERROR)
 const isExpanded = ref(false)
 
 const totalSizeFormatted = computed(() => {
@@ -27,7 +31,22 @@ function toggleExpanded() {
 
 <template>
   <div class="context-indicator">
-    <div class="context-header" @click="toggleExpanded">
+    <!-- Loading state -->
+    <div v-if="isLoading" class="context-loading">
+      <div class="loading-spinner"></div>
+      <span class="loading-text">
+        Loading {{ contextStore.githubRepo?.owner }}/{{ contextStore.githubRepo?.repo }}...
+      </span>
+    </div>
+
+    <!-- Error state -->
+    <div v-else-if="hasError" class="context-error">
+      <span class="error-text">{{ contextStore.error }}</span>
+      <button class="dismiss-btn" @click="contextStore.setError(null)">Dismiss</button>
+    </div>
+
+    <!-- Normal state with files -->
+    <div v-else class="context-header" @click="toggleExpanded">
       <div class="context-summary">
         <svg class="context-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
           <path
@@ -35,9 +54,10 @@ function toggleExpanded() {
           />
         </svg>
         <span class="context-text">
-          Context: {{ contextStore.fileCount }} file{{
-            contextStore.fileCount !== 1 ? 's' : ''
-          }}
+          <span v-if="contextStore.githubRepo" class="github-badge">
+            {{ contextStore.githubRepo.owner }}/{{ contextStore.githubRepo.repo }}
+          </span>
+          {{ contextStore.fileCount }} file{{ contextStore.fileCount !== 1 ? 's' : '' }}
           ({{ totalSizeFormatted }})
         </span>
       </div>
@@ -83,6 +103,70 @@ function toggleExpanded() {
 .context-indicator {
   background-color: var(--color-surface-elevated);
   border-bottom: 1px solid var(--color-border);
+}
+
+.context-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.loading-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.context-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: color-mix(in srgb, var(--color-error) 10%, var(--color-surface-elevated));
+}
+
+.error-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+}
+
+.dismiss-btn {
+  padding: 2px var(--spacing-xs);
+  background: transparent;
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.dismiss-btn:hover {
+  background-color: var(--color-error);
+  color: white;
+}
+
+.github-badge {
+  background-color: var(--color-background);
+  padding: 1px 4px;
+  border-radius: 3px;
+  margin-right: var(--spacing-xs);
 }
 
 .context-header {
