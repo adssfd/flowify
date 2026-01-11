@@ -7,6 +7,7 @@ import { useContextStore } from '@/stores/context'
 import ChatMessage from './ChatMessage.vue'
 import ChatInput from './ChatInput.vue'
 import { AIServiceFactory } from '@/services/ai'
+import { readTextFile } from '@/utils/fileReader'
 import type { AIRequest } from '@/types'
 import { AIError, ContextSource } from '@/types'
 
@@ -420,15 +421,21 @@ function detectLanguage(filename: string): string {
   return langMap[ext] || 'plaintext'
 }
 
-function handleFilesDropped(files: File[]) {
-  // Add files to context store (content will be read in Phase 3)
+async function handleFilesDropped(files: File[]) {
   for (const file of files) {
+    const result = await readTextFile(file)
+
+    if (!result.success) {
+      // Skip binary files silently
+      continue
+    }
+
     contextStore.addFile({
       name: file.name,
       path: file.name,
-      content: '', // Will be populated in Phase 3
+      content: result.content,
       language: detectLanguage(file.name),
-      size: file.size,
+      size: result.content.length,
       source: ContextSource.LOCAL,
     })
   }

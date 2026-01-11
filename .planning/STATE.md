@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** AI generates accurate, relevant diagrams by understanding the actual code structure
-**Current focus:** Phase 3 — File Reading
+**Current focus:** Phase 4 — Folder Processing
 
 ## Current Position
 
-Phase: 3 of 12 (File Reading)
+Phase: 4 of 12 (Folder Processing)
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-01-11 — Phase 2 completed
+Last activity: 2026-01-11 — Phase 3 completed
 
-Progress: ██░░░░░░░░ 17%
+Progress: ███░░░░░░░ 25%
 
 ## Performance Metrics
 
