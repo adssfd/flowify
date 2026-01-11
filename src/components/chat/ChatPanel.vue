@@ -6,6 +6,7 @@ import { useAIStore } from '@/stores/ai'
 import { useContextStore } from '@/stores/context'
 import ChatMessage from './ChatMessage.vue'
 import ChatInput from './ChatInput.vue'
+import ContextIndicator from './ContextIndicator.vue'
 import { AIServiceFactory } from '@/services/ai'
 import {
   readTextFile,
@@ -478,6 +479,8 @@ async function handleDataDropped(dataTransfer: DataTransfer) {
         🗑️ Clear
       </button>
     </div>
+
+    <ContextIndicator v-if="contextStore.hasContext" />
 
     <div ref="messagesContainer" class="messages-container">
       <ChatMessage

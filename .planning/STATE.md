@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** AI generates accurate, relevant diagrams by understanding the actual code structure
-**Current focus:** Phase 5 — Context Display
+**Current focus:** Phase 6 — GitHub URL Parsing
 
 ## Current Position
 
-Phase: 5 of 12 (Context Display)
+Phase: 6 of 12 (GitHub URL Parsing)
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-01-11 — Phase 4 completed
+Last activity: 2026-01-11 — Phase 5 completed
 
-Progress: ████░░░░░░ 33%
+Progress: █████░░░░░ 42%
 
 ## Performance Metrics
 
