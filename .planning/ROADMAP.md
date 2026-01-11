@@ -17,7 +17,7 @@ None
 - [x] **Phase 1: Context Foundation** - Types and Pinia store for context state
 - [x] **Phase 2: File Drop Zone** - Drag & drop UI in chat panel
 - [x] **Phase 3: File Reading** - Read file content with encoding detection
-- [ ] **Phase 4: Folder Processing** - Recursive folder reading and filtering
+- [x] **Phase 4: Folder Processing** - Recursive folder reading and filtering
 - [ ] **Phase 5: Context Display** - Show loaded files with removal controls
 - [ ] **Phase 6: GitHub URL Parsing** - Detect and parse GitHub repo URLs
 - [ ] **Phase 7: GitHub API** - Fetch public repo contents
@@ -51,7 +51,7 @@ None
 **Goal**: Handle folder drops, recursively read contents, filter by file type
 **Depends on**: Phase 3
 **Research**: Unlikely (File System Access API patterns)
-**Plans**: TBD
+**Plans**: 1 (04-01-PLAN.md)
 
 ### Phase 5: Context Display
 **Goal**: Show loaded files in chat UI, allow individual file removal, clear all
@@ -113,7 +113,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 1. Context Foundation | 1/1 | Complete | 2026-01-11 |
 | 2. File Drop Zone | 1/1 | Complete | 2026-01-11 |
 | 3. File Reading | 1/1 | Complete | 2026-01-11 |
-| 4. Folder Processing | 0/TBD | Not started | - |
+| 4. Folder Processing | 1/1 | Complete | 2026-01-11 |
 | 5. Context Display | 0/TBD | Not started | - |
 | 6. GitHub URL Parsing | 0/TBD | Not started | - |
 | 7. GitHub API | 0/TBD | Not started | - |

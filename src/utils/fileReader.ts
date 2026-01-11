@@ -86,3 +86,88 @@ export async function readTextFile(file: File): Promise<ReadFileResult> {
     }
   }
 }
+
+// FileSystem Entry type for folder drag & drop
+export interface FileSystemEntryLike {
+  isFile: boolean
+  isDirectory: boolean
+  name: string
+  fullPath?: string
+  file?: (success: (file: File) => void, error?: (err: Error) => void) => void
+  createReader?: () => {
+    readEntries: (
+      success: (entries: FileSystemEntryLike[]) => void,
+      error?: (err: Error) => void
+    ) => void
+  }
+}
+
+export interface FileWithPath {
+  file: File
+  path: string
+}
+
+async function readAllEntries(
+  reader: ReturnType<NonNullable<FileSystemEntryLike['createReader']>>
+): Promise<FileSystemEntryLike[]> {
+  const allEntries: FileSystemEntryLike[] = []
+
+  // readEntries may not return all entries in one call, so we keep reading
+  const readBatch = (): Promise<FileSystemEntryLike[]> =>
+    new Promise((resolve, reject) => {
+      reader.readEntries(resolve, reject)
+    })
+
+  let entries = await readBatch()
+  while (entries.length > 0) {
+    allEntries.push(...entries)
+    entries = await readBatch()
+  }
+
+  return allEntries
+}
+
+export async function readDirectory(
+  entry: FileSystemEntryLike,
+  basePath = ''
+): Promise<FileWithPath[]> {
+  const files: FileWithPath[] = []
+  const currentPath = basePath ? `${basePath}/${entry.name}` : entry.name
+
+  if (entry.isFile && entry.file) {
+    const file = await new Promise<File>((resolve, reject) => {
+      entry.file!(resolve, reject)
+    })
+    files.push({ file, path: currentPath })
+    return files
+  }
+
+  if (entry.isDirectory && entry.createReader) {
+    const reader = entry.createReader()
+    const entries = await readAllEntries(reader)
+
+    for (const childEntry of entries) {
+      const childFiles = await readDirectory(childEntry, currentPath)
+      files.push(...childFiles)
+    }
+  }
+
+  return files
+}
+
+export function getEntriesFromDataTransfer(dataTransfer: DataTransfer): FileSystemEntryLike[] {
+  const entries: FileSystemEntryLike[] = []
+  const items = dataTransfer.items
+
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i]
+    // webkitGetAsEntry is the standard way to access directory structure
+    const entry = (item as DataTransferItem & { webkitGetAsEntry?: () => FileSystemEntryLike })
+      .webkitGetAsEntry?.() as FileSystemEntryLike | null
+    if (entry) {
+      entries.push(entry)
+    }
+  }
+
+  return entries
+}

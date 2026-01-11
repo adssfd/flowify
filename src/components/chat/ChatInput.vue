@@ -8,7 +8,7 @@ interface Props {
 interface Emits {
   (e: 'send', message: string): void
   (e: 'stop'): void
-  (e: 'files-dropped', files: File[]): void
+  (e: 'data-dropped', dataTransfer: DataTransfer): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -67,9 +67,9 @@ function handleDrop(event: DragEvent) {
   event.stopPropagation()
   isDragging.value = false
 
-  const files = event.dataTransfer?.files
-  if (files && files.length > 0) {
-    emit('files-dropped', Array.from(files))
+  const dataTransfer = event.dataTransfer
+  if (dataTransfer) {
+    emit('data-dropped', dataTransfer)
   }
 }
 </script>

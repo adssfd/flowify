@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** AI generates accurate, relevant diagrams by understanding the actual code structure
-**Current focus:** Phase 4 — Folder Processing
+**Current focus:** Phase 5 — Context Display
 
 ## Current Position
 
-Phase: 4 of 12 (Folder Processing)
+Phase: 5 of 12 (Context Display)
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-01-11 — Phase 3 completed
+Last activity: 2026-01-11 — Phase 4 completed
 
-Progress: ███░░░░░░░ 25%
+Progress: ████░░░░░░ 33%
 
 ## Performance Metrics
 

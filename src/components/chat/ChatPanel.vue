@@ -7,7 +7,12 @@ import { useContextStore } from '@/stores/context'
 import ChatMessage from './ChatMessage.vue'
 import ChatInput from './ChatInput.vue'
 import { AIServiceFactory } from '@/services/ai'
-import { readTextFile } from '@/utils/fileReader'
+import {
+  readTextFile,
+  getEntriesFromDataTransfer,
+  readDirectory,
+  type FileWithPath,
+} from '@/utils/fileReader'
 import type { AIRequest } from '@/types'
 import { AIError, ContextSource } from '@/types'
 
@@ -421,8 +426,8 @@ function detectLanguage(filename: string): string {
   return langMap[ext] || 'plaintext'
 }
 
-async function handleFilesDropped(files: File[]) {
-  for (const file of files) {
+async function processFiles(filesWithPath: FileWithPath[]) {
+  for (const { file, path } of filesWithPath) {
     const result = await readTextFile(file)
 
     if (!result.success) {
@@ -432,12 +437,30 @@ async function handleFilesDropped(files: File[]) {
 
     contextStore.addFile({
       name: file.name,
-      path: file.name,
+      path,
       content: result.content,
       language: detectLanguage(file.name),
       size: result.content.length,
       source: ContextSource.LOCAL,
     })
+  }
+}
+
+async function handleDataDropped(dataTransfer: DataTransfer) {
+  const entries = getEntriesFromDataTransfer(dataTransfer)
+
+  // If no entries (fallback for browsers without webkitGetAsEntry)
+  if (entries.length === 0) {
+    const files = Array.from(dataTransfer.files)
+    const filesWithPath: FileWithPath[] = files.map((file) => ({ file, path: file.name }))
+    await processFiles(filesWithPath)
+    return
+  }
+
+  // Process entries (can include folders)
+  for (const entry of entries) {
+    const filesWithPath = await readDirectory(entry)
+    await processFiles(filesWithPath)
   }
 }
 </script>
@@ -482,7 +505,7 @@ async function handleFilesDropped(files: File[]) {
       :is-generating="chatStore.isTyping"
       @send="handleSendMessage"
       @stop="handleStopGeneration"
-      @files-dropped="handleFilesDropped"
+      @data-dropped="handleDataDropped"
     />
   </div>
 </template>
