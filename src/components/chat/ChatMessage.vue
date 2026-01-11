@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ChatMessage as ChatMessageType } from '@/types'
+import MessageContent from './MessageContent.vue'
 
 interface Props {
   message: ChatMessageType
@@ -27,17 +28,18 @@ function applySuggestion() {
     </div>
 
     <div class="message-content">
-      {{ message.content }}
+      <MessageContent v-if="message.role === 'assistant'" :content="message.content" />
+      <template v-else>{{ message.content }}</template>
     </div>
 
     <div v-if="message.tokenStats" class="token-stats">
-      <span class="stat-item" title="Tokens per second">
+      <span class="stat-item" title="Tokens per second - measures AI response speed">
         ⚡ {{ message.tokenStats.tokensPerSecond }} tok/s
       </span>
-      <span class="stat-item" title="Total tokens">
+      <span class="stat-item" title="Estimated token count (actual may vary by model)">
         📊 {{ message.tokenStats.totalTokens }} tokens
       </span>
-      <span class="stat-item" title="Generation time">
+      <span class="stat-item" title="Total time to generate response">
         ⏱️ {{ (message.tokenStats.durationMs / 1000).toFixed(1) }}s
       </span>
     </div>
@@ -100,8 +102,12 @@ function applySuggestion() {
 
 .message-content {
   line-height: 1.5;
-  white-space: pre-wrap;
   font-size: var(--font-size-sm);
+}
+
+/* User messages need pre-wrap for whitespace preservation */
+.message-user .message-content {
+  white-space: pre-wrap;
 }
 
 .token-stats {

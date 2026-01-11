@@ -59,7 +59,11 @@ function toggleExpanded() {
           </span>
           {{ contextStore.fileCount }} file{{ contextStore.fileCount !== 1 ? 's' : '' }}
           ({{ totalSizeFormatted }})
-          <span v-if="contextStore.isContextTruncated" class="truncation-warning">
+          <span
+            v-if="contextStore.isContextTruncated"
+            class="truncation-warning"
+            title="File content was shortened to fit within AI context limits"
+          >
             (truncated)
           </span>
         </span>

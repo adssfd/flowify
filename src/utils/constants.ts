@@ -55,6 +55,11 @@ export const BLANK_DIAGRAM_CONTENT: Record<DiagramType, string> = {
   [DiagramType.GITGRAPH]: `gitGraph
     commit
 `,
+  [DiagramType.JOURNEY]: `journey
+    title My Journey
+    section Start
+      Task 1: 5: Actor
+`,
 }
 
 export const DEFAULT_DIAGRAM_CONTENT: Record<DiagramType, string> = {
@@ -170,6 +175,16 @@ export const DEFAULT_DIAGRAM_CONTENT: Record<DiagramType, string> = {
     commit id: "Critical fix"
     checkout main
     merge hotfix id: "v1.0.1"`,
+  [DiagramType.JOURNEY]: `journey
+    title User Checkout Flow
+    section Browse
+      View products: 5: User
+      Add to cart: 4: User
+    section Checkout
+      Enter details: 3: User
+      Make payment: 2: User
+    section Complete
+      Receive confirmation: 5: User`,
 }
 
 export const DIAGRAM_TYPE_LABELS: Record<DiagramType, string> = {
@@ -183,6 +198,7 @@ export const DIAGRAM_TYPE_LABELS: Record<DiagramType, string> = {
   [DiagramType.MINDMAP]: 'Mind Map',
   [DiagramType.TIMELINE]: 'Timeline',
   [DiagramType.GITGRAPH]: 'Git Graph',
+  [DiagramType.JOURNEY]: 'User Journey',
 }
 
 export const AUTO_SAVE_DELAY = 300 // milliseconds

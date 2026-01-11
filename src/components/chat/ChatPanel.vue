@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, nextTick, watch, onMounted } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
 import { useChatStore } from '@/stores/chat'
 import { useTabsStore } from '@/stores/tabs'
 import { useAIStore } from '@/stores/ai'
@@ -17,7 +18,7 @@ import {
 import { parseGitHubUrl } from '@/utils/github'
 import { fetchGitHubRepo } from '@/services/github'
 import { ContextLoadingState } from '@/types'
-import type { AIRequest } from '@/types'
+import type { AIRequest, DiagramTemplate } from '@/types'
 import { AIError, ContextSource } from '@/types'
 
 const chatStore = useChatStore()
@@ -29,6 +30,7 @@ const messagesContainer = ref<HTMLDivElement | null>(null)
 const lastUserMessage = ref<string>('')
 const showRetry = ref(false)
 const isRetrying = ref(false)
+const isConnecting = ref(false)
 const abortController = ref<AbortController | null>(null)
 
 // Sync active tab with chat store
@@ -62,6 +64,9 @@ async function scrollToBottom() {
   }
 }
 
+// Debounced scroll for streaming - prevents jank on fast token arrival
+const debouncedScrollToBottom = useDebounceFn(scrollToBottom, 100)
+
 function handleStopGeneration() {
   if (abortController.value) {
     abortController.value.abort()
@@ -75,6 +80,7 @@ async function handleSendMessage(message: string) {
   showRetry.value = false
   chatStore.addUserMessage(message)
   chatStore.setTyping(true)
+  isConnecting.value = true
 
   // Create new abort controller for this request
   abortController.value = new AbortController()
@@ -87,6 +93,7 @@ async function handleSendMessage(message: string) {
       'Please configure your AI provider in Settings to use the chat feature. Go to Settings > AI Assistant Configuration to set up your API key.'
     )
     chatStore.setTyping(false)
+    isConnecting.value = false
     abortController.value = null
     await scrollToBottom()
     return
@@ -98,6 +105,7 @@ async function handleSendMessage(message: string) {
     if (!activeTab) {
       chatStore.addAssistantMessage('No active diagram tab. Please create or open a diagram first.')
       chatStore.setTyping(false)
+      isConnecting.value = false
       abortController.value = null
       await scrollToBottom()
       return
@@ -133,6 +141,11 @@ async function handleSendMessage(message: string) {
     // Stream response
     await aiService.streamResponse(request, (chunk) => {
       if (!chunk.done) {
+        // First chunk received - no longer connecting
+        if (isConnecting.value) {
+          isConnecting.value = false
+        }
+
         streamedContent += chunk.content
         // Estimate tokens (~4 chars per token for English text)
         tokenCount = Math.ceil(streamedContent.length / 4)
@@ -144,8 +157,8 @@ async function handleSendMessage(message: string) {
           lastMsg.content = streamedContent
         }
 
-        // Auto-scroll during streaming
-        scrollToBottom()
+        // Auto-scroll during streaming (debounced to prevent jank)
+        debouncedScrollToBottom()
       }
     }, abortController.value.signal)
 
@@ -214,6 +227,7 @@ async function handleSendMessage(message: string) {
     showRetry.value = true
   } finally {
     chatStore.setTyping(false)
+    isConnecting.value = false
     abortController.value = null
     await scrollToBottom()
   }
@@ -304,8 +318,8 @@ async function handleRetry() {
           lastMsg.content = streamedContent
         }
 
-        // Auto-scroll during streaming
-        scrollToBottom()
+        // Auto-scroll during streaming (debounced to prevent jank)
+        debouncedScrollToBottom()
       }
     }, abortController.value.signal)
 
@@ -487,6 +501,12 @@ async function handleGitHubUrl(url: string) {
     contextStore.setError(message)
   }
 }
+
+function handleTemplateSelected(template: DiagramTemplate) {
+  if (tabsStore.activeTabId) {
+    tabsStore.updateTabContent(tabsStore.activeTabId, template.code)
+  }
+}
 </script>
 
 <template>
@@ -516,9 +536,14 @@ async function handleGitHubUrl(url: string) {
       />
 
       <div v-if="chatStore.isTyping" class="typing-indicator">
-        <span></span>
-        <span></span>
-        <span></span>
+        <template v-if="isConnecting">
+          <span class="connecting-text">Connecting to AI...</span>
+        </template>
+        <template v-else>
+          <span></span>
+          <span></span>
+          <span></span>
+        </template>
       </div>
 
       <div v-if="showRetry && !chatStore.isTyping" class="retry-container">
@@ -536,6 +561,7 @@ async function handleGitHubUrl(url: string) {
       @stop="handleStopGeneration"
       @data-dropped="handleDataDropped"
       @github-url="handleGitHubUrl"
+      @template-selected="handleTemplateSelected"
     />
   </div>
 </template>
@@ -602,6 +628,22 @@ async function handleGitHubUrl(url: string) {
   display: flex;
   gap: 4px;
   padding: var(--spacing-sm);
+}
+
+.connecting-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .typing-indicator span {

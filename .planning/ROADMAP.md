@@ -1,8 +1,13 @@
-# Roadmap: Flowify Codebase Context
+# Roadmap: Flowify
 
 ## Overview
 
-Add codebase context awareness to Flowify's AI assistant. Users will be able to drag & drop files/folders or paste GitHub URLs, and the AI will analyze the code to generate relevant diagrams. The journey goes from foundation (types/state) through local file handling, then GitHub integration, and finally AI enhancements for smart diagram generation.
+Flowify is a UML diagram editor with AI-powered diagram generation. The roadmap progresses from core diagram editing (v1.0) through enhanced AI experience with better diagram generation rules and rendering (v1.1).
+
+## Milestones
+
+- ✅ [v1.0 Codebase Context](milestones/v1.0-ROADMAP.md) (Phases 1-12) — SHIPPED 2026-01-11
+- ✅ [v1.1 AI Diagram Experience](milestones/v1.1-ROADMAP.md) (Phases 13-20) — SHIPPED 2026-01-11
 
 ## Domain Expertise
 
@@ -13,6 +18,9 @@ None
 **Phase Numbering:**
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
+
+<details>
+<summary>✅ v1.0 Codebase Context (Phases 1-12) - SHIPPED 2026-01-11</summary>
 
 - [x] **Phase 1: Context Foundation** - Types and Pinia store for context state
 - [x] **Phase 2: File Drop Zone** - Drag & drop UI in chat panel
@@ -27,98 +35,50 @@ None
 - [x] **Phase 11: Conversational Context** - Context persists across chat turns
 - [x] **Phase 12: Polish** - Error handling, loading states, UX refinements
 
-## Phase Details
+See [v1.0 Archive](milestones/v1.0-ROADMAP.md) for full phase details.
 
-### Phase 1: Context Foundation
-**Goal**: Define TypeScript types and create Pinia store for managing file context state
-**Depends on**: Nothing (first phase)
-**Research**: Unlikely (internal patterns, TypeScript types)
-**Plans**: 1 (01-01-PLAN.md)
+</details>
 
-### Phase 2: File Drop Zone
-**Goal**: Add drag & drop area to chat panel that accepts files
-**Depends on**: Phase 1
-**Research**: Unlikely (browser File API, existing Vue patterns)
-**Plans**: 1 (02-01-PLAN.md)
+<details>
+<summary>✅ v1.1 AI Diagram Experience (Phases 13-20) - SHIPPED 2026-01-11</summary>
 
-### Phase 3: File Reading
-**Goal**: Read dropped file content, detect text vs binary, handle encoding
-**Depends on**: Phase 2
-**Research**: Unlikely (File API, TextDecoder standard)
-**Plans**: 1 (03-01-PLAN.md)
+- [x] **Phase 13: Mermaid Skill Prompt** - Inject skill rules into AI system prompt
+- [x] **Phase 14: Markdown Rendering** - Render markdown properly in AI chat responses
+- [x] **Phase 15: Sidecar Detection** - Parse ASCII sidecar blocks from AI responses
+- [x] **Phase 16: Sidecar Display** - Show ASCII sidecar alongside Mermaid diagrams
+- [x] **Phase 17: Template Library** - Compatible templates with quick insertion UI
+- [x] **Phase 18: Diagram Type Assistant** - Auto-detection verified for all 11 types
+- [x] **Phase 19: Render Fallback** - Auto-show ASCII when Mermaid rendering fails
+- [x] **Phase 20: Polish** - Error states, loading indicators, UX refinements
 
-### Phase 4: Folder Processing
-**Goal**: Handle folder drops, recursively read contents, filter by file type
-**Depends on**: Phase 3
-**Research**: Unlikely (File System Access API patterns)
-**Plans**: 1 (04-01-PLAN.md)
+See [v1.1 Archive](milestones/v1.1-ROADMAP.md) for full phase details.
 
-### Phase 5: Context Display
-**Goal**: Show loaded files in chat UI, allow individual file removal, clear all
-**Depends on**: Phase 4
-**Research**: Unlikely (Vue component patterns)
-**Plans**: 1 (05-01-PLAN.md)
-
-### Phase 6: GitHub URL Parsing
-**Goal**: Detect GitHub URLs in chat input, parse repo/branch/path components
-**Depends on**: Phase 1
-**Research**: Unlikely (URL parsing, regex patterns)
-**Plans**: 1 (06-01-PLAN.md)
-
-### Phase 7: GitHub API
-**Goal**: Fetch file contents from public GitHub repos via API
-**Depends on**: Phase 6
-**Research**: Likely (GitHub API rate limits, unauthenticated access patterns)
-**Research topics**: GitHub Contents API, rate limits for unauthenticated requests, recursive tree fetching
-**Plans**: 1 (07-01-PLAN.md)
-
-### Phase 8: AI Context Injection
-**Goal**: Modify AI service to include file context in requests
-**Depends on**: Phase 5, Phase 7
-**Research**: Unlikely (extending existing AI service patterns)
-**Plans**: 1 (08-01-PLAN.md)
-
-### Phase 9: Diagram Suggestion
-**Goal**: AI analyzes code context and suggests appropriate Mermaid diagram type
-**Depends on**: Phase 8
-**Research**: Unlikely (prompt engineering, existing AI patterns)
-**Plans**: 1 (09-01-PLAN.md)
-
-### Phase 10: Token Management
-**Goal**: Handle large contexts - truncation, smart file selection, token estimation
-**Depends on**: Phase 8
-**Research**: Likely (token counting methods, context limits per AI model)
-**Research topics**: tiktoken or similar for browser, model context window sizes, truncation strategies
-**Plans**: TBD
-
-### Phase 11: Conversational Context
-**Goal**: File context persists across multiple chat turns within conversation
-**Depends on**: Phase 8
-**Research**: Unlikely (state management, existing chat patterns)
-**Plans**: TBD
-
-### Phase 12: Polish
-**Goal**: Error handling, loading states, empty states, edge cases, UX refinements
-**Depends on**: All previous phases
-**Research**: Unlikely (internal patterns)
-**Plans**: TBD
+</details>
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 → 12
+Phases execute in numeric order: 1 → 2 → ... → 12 → 13 → 14 → ... → 20
 
-| Phase | Plans Complete | Status | Completed |
-|-------|----------------|--------|-----------|
-| 1. Context Foundation | 1/1 | Complete | 2026-01-11 |
-| 2. File Drop Zone | 1/1 | Complete | 2026-01-11 |
-| 3. File Reading | 1/1 | Complete | 2026-01-11 |
-| 4. Folder Processing | 1/1 | Complete | 2026-01-11 |
-| 5. Context Display | 1/1 | Complete | 2026-01-11 |
-| 6. GitHub URL Parsing | 1/1 | Complete | 2026-01-11 |
-| 7. GitHub API | 1/1 | Complete | 2026-01-11 |
-| 8. AI Context Injection | 1/1 | Complete | 2026-01-11 |
-| 9. Diagram Suggestion | 1/1 | Complete | 2026-01-11 |
-| 10. Token Management | 1/1 | Complete | 2026-01-11 |
-| 11. Conversational Context | 1/1 | Complete | 2026-01-11 |
-| 12. Polish | 1/1 | Complete | 2026-01-11 |
+| Phase | Milestone | Plans Complete | Status | Completed |
+|-------|-----------|----------------|--------|-----------|
+| 1. Context Foundation | v1.0 | 1/1 | Complete | 2026-01-11 |
+| 2. File Drop Zone | v1.0 | 1/1 | Complete | 2026-01-11 |
+| 3. File Reading | v1.0 | 1/1 | Complete | 2026-01-11 |
+| 4. Folder Processing | v1.0 | 1/1 | Complete | 2026-01-11 |
+| 5. Context Display | v1.0 | 1/1 | Complete | 2026-01-11 |
+| 6. GitHub URL Parsing | v1.0 | 1/1 | Complete | 2026-01-11 |
+| 7. GitHub API | v1.0 | 1/1 | Complete | 2026-01-11 |
+| 8. AI Context Injection | v1.0 | 1/1 | Complete | 2026-01-11 |
+| 9. Diagram Suggestion | v1.0 | 1/1 | Complete | 2026-01-11 |
+| 10. Token Management | v1.0 | 1/1 | Complete | 2026-01-11 |
+| 11. Conversational Context | v1.0 | 1/1 | Complete | 2026-01-11 |
+| 12. Polish | v1.0 | 1/1 | Complete | 2026-01-11 |
+| 13. Mermaid Skill Prompt | v1.1 | 1/1 | Complete | 2026-01-11 |
+| 14. Markdown Rendering | v1.1 | 2/2 | Complete | 2026-01-11 |
+| 15. Sidecar Detection | v1.1 | 1/1 | Complete | 2026-01-11 |
+| 16. Sidecar Display | v1.1 | 1/1 | Complete | 2026-01-11 |
+| 17. Template Library | v1.1 | 1/1 | Complete | 2026-01-11 |
+| 18. Diagram Type Assistant | v1.1 | 1/1 | Complete | 2026-01-11 |
+| 19. Render Fallback | v1.1 | 1/1 | Complete | 2026-01-11 |
+| 20. Polish | v1.1 | 1/1 | Complete | 2026-01-11 |

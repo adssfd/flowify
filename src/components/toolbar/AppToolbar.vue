@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useTabsStore } from '@/stores/tabs'
 import { useLayoutStore } from '@/stores/layout'
 import FileOperations from './FileOperations.vue'
@@ -19,6 +19,17 @@ const diagramType = computed(() => {
 const hasUnsavedChanges = computed(() => tabsStore.activeTab?.hasUnsavedChanges ?? false)
 
 const showSettings = ref(false)
+const typeChanged = ref(false)
+
+// Watch for diagram type changes and trigger highlight animation
+watch(diagramType, (newType, oldType) => {
+  if (oldType && newType !== oldType && newType !== 'No Type') {
+    typeChanged.value = true
+    setTimeout(() => {
+      typeChanged.value = false
+    }, 600)
+  }
+})
 
 function toggleSettings() {
   showSettings.value = !showSettings.value
@@ -29,7 +40,7 @@ function toggleSettings() {
   <div class="app-toolbar">
     <div class="toolbar-section toolbar-left">
       <h1 class="app-title">Flowify</h1>
-      <div class="diagram-type-badge">
+      <div class="diagram-type-badge" :class="{ 'type-changed': typeChanged }">
         <span class="type-label">{{ diagramType }}</span>
       </div>
     </div>
@@ -149,6 +160,34 @@ function toggleSettings() {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
+}
+
+.diagram-type-badge.type-changed {
+  animation: type-pulse 0.5s ease-out;
+}
+
+.diagram-type-badge.type-changed .type-label {
+  animation: type-text-pulse 0.5s ease-out;
+}
+
+@keyframes type-pulse {
+  0% {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+  100% {
+    background-color: var(--color-surface-elevated);
+    border-color: var(--color-border);
+  }
+}
+
+@keyframes type-text-pulse {
+  0% {
+    color: white;
+  }
+  100% {
+    color: var(--color-text-secondary);
+  }
 }
 
 .diagram-info {

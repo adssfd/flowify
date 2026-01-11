@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { isGitHubUrl } from '@/utils/github'
+import TemplateLibrary from './TemplateLibrary.vue'
+import type { DiagramTemplate } from '@/types'
 
 interface Props {
   isGenerating?: boolean
@@ -12,6 +14,7 @@ interface Emits {
   (e: 'stop'): void
   (e: 'data-dropped', dataTransfer: DataTransfer): void
   (e: 'github-url', url: string): void
+  (e: 'template-selected', template: DiagramTemplate): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,6 +26,12 @@ const emit = defineEmits<Emits>()
 
 const inputValue = ref('')
 const isDragging = ref(false)
+const showTemplateLibrary = ref(false)
+
+function handleTemplateSelect(template: DiagramTemplate) {
+  emit('template-selected', template)
+  showTemplateLibrary.value = false
+}
 
 function handleSend() {
   const message = inputValue.value.trim()
@@ -122,7 +131,20 @@ function handlePaste(event: ClipboardEvent) {
       <button class="suggestion-chip" @click="inputValue = 'Explain Mermaid syntax'">
         Explain syntax
       </button>
+      <button
+        class="suggestion-chip template-chip"
+        title="Insert diagram template"
+        @click="showTemplateLibrary = true"
+      >
+        Templates
+      </button>
     </div>
+
+    <TemplateLibrary
+      v-if="showTemplateLibrary"
+      @select="handleTemplateSelect"
+      @close="showTemplateLibrary = false"
+    />
 
     <div class="input-container">
       <textarea
@@ -232,6 +254,16 @@ function handlePaste(event: ClipboardEvent) {
   background-color: color-mix(in srgb, var(--color-primary) 15%, var(--color-surface-elevated));
   border-color: var(--color-primary);
   color: var(--color-primary);
+}
+
+.template-chip {
+  background-color: color-mix(in srgb, var(--color-success) 15%, var(--color-surface-elevated));
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.template-chip:hover {
+  background-color: var(--color-success);
 }
 
 .drop-hint {

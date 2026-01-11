@@ -117,6 +117,19 @@ export const DIAGRAM_TEMPLATES: Record<DiagramType, string[]> = {
     checkout main
     merge develop id: "Release v1.0"`,
   ],
+
+  [DiagramType.JOURNEY]: [
+    `journey
+    title User Checkout Flow
+    section Browse
+      View products: 5: User
+      Add to cart: 4: User
+    section Checkout
+      Enter details: 3: User
+      Make payment: 2: User
+    section Complete
+      Receive confirmation: 5: User`,
+  ],
 }
 
 export function getTemplate(type: DiagramType, index = 0): string {

@@ -16,11 +16,13 @@ export function validateMermaidSyntax(content: string): ValidationError | null {
     'flowchart',
     'erDiagram',
     'stateDiagram',
+    'stateDiagram-v2',
     'gantt',
     'pie',
     'mindmap',
     'timeline',
     'gitGraph',
+    'journey',
   ]
 
   const hasValidType = firstLine ? validDiagramTypes.some((type) => firstLine.includes(type)) : false
@@ -52,6 +54,7 @@ export function getMermaidDiagramType(content: string): string | null {
   if (firstLine.includes('mindmap')) return 'mindmap'
   if (firstLine.includes('timeline')) return 'timeline'
   if (firstLine.includes('gitGraph')) return 'gitGraph'
+  if (firstLine.includes('journey')) return 'journey'
 
   return null
 }
@@ -87,6 +90,8 @@ export function detectDiagramType(content: string): DiagramType | null {
       return DiagramType.TIMELINE
     case 'gitGraph':
       return DiagramType.GITGRAPH
+    case 'journey':
+      return DiagramType.JOURNEY
     default:
       return null
   }

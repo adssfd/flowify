@@ -9,6 +9,7 @@ export enum DiagramType {
   MINDMAP = 'mindmap',
   TIMELINE = 'timeline',
   GITGRAPH = 'gitGraph',
+  JOURNEY = 'journey',
 }
 
 export interface DiagramMetadata {
