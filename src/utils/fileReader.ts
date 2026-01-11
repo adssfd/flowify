@@ -1,3 +1,39 @@
+// Directories to ignore when processing folders
+const IGNORED_DIRECTORIES = new Set([
+  'node_modules',
+  '.git',
+  '.svn',
+  '.hg',
+  'dist',
+  'build',
+  'out',
+  '.next',
+  '.nuxt',
+  '.output',
+  'coverage',
+  '__pycache__',
+  '.pytest_cache',
+  '.venv',
+  'venv',
+  'env',
+  'vendor',
+  '.cache',
+  '.turbo',
+  '.parcel-cache',
+  '.webpack',
+  '.angular',
+  'target', // Rust/Java
+  'bin',
+  'obj', // .NET
+  '.idea',
+  '.vscode',
+  '.DS_Store',
+])
+
+export function isIgnoredDirectory(name: string): boolean {
+  return IGNORED_DIRECTORIES.has(name)
+}
+
 // Binary file extensions to skip
 const BINARY_EXTENSIONS = new Set([
   'png',
@@ -132,6 +168,12 @@ export async function readDirectory(
   basePath = ''
 ): Promise<FileWithPath[]> {
   const files: FileWithPath[] = []
+
+  // Skip ignored directories
+  if (entry.isDirectory && isIgnoredDirectory(entry.name)) {
+    return files
+  }
+
   const currentPath = basePath ? `${basePath}/${entry.name}` : entry.name
 
   if (entry.isFile && entry.file) {
